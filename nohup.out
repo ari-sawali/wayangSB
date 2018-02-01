@@ -1,0 +1,38 @@
+utf-8
+Traceback (most recent call last):
+  File "/home/bariza/LineSelfBot/wayangDev/wayang.py", line 3, in <module>
+    from fellyModule.botLogin import *
+  File "/home/bariza/LineSelfBot/wayangDev/fellyModule/botLogin.py", line 26, in <module>
+    client = LINE(idOrAuthToken="EoJPgSeHvsijHevWfNg0.JUROxzdkKD3c/MrJQ951aa.XP0n+ARFU3JwM4KQhwAKO+Um5B5ynYkkfM7FWDIvTwM=")
+  File "/home/bariza/LineSelfBot/wayangDev/linepy/client.py", line 22, in __init__
+    self.__initAll()
+  File "/home/bariza/LineSelfBot/wayangDev/linepy/client.py", line 26, in __initAll
+    self.profile    = self.talk.getProfile()
+  File "/home/bariza/LineSelfBot/wayangDev/wayangProject/lib/python3.6/site-packages/akad/TalkService.py", line 4915, in getProfile
+    self.send_getProfile()
+  File "/home/bariza/LineSelfBot/wayangDev/wayangProject/lib/python3.6/site-packages/akad/TalkService.py", line 4923, in send_getProfile
+    self._oprot.trans.flush()
+  File "/home/bariza/LineSelfBot/wayangDev/wayangProject/lib/python3.6/site-packages/thrift/transport/THttpClient.py", line 141, in _f
+    result = f(*args, **kwargs)
+  File "/home/bariza/LineSelfBot/wayangDev/wayangProject/lib/python3.6/site-packages/thrift/transport/THttpClient.py", line 181, in flush
+    self.__http.endheaders()
+  File "/usr/local/lib/python3.6/http/client.py", line 1234, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/local/lib/python3.6/http/client.py", line 1026, in _send_output
+    self.send(msg)
+  File "/usr/local/lib/python3.6/http/client.py", line 964, in send
+    self.connect()
+  File "/usr/local/lib/python3.6/http/client.py", line 1400, in connect
+    server_hostname=server_hostname)
+  File "/usr/local/lib/python3.6/ssl.py", line 407, in wrap_socket
+    _context=self, _session=session)
+  File "/usr/local/lib/python3.6/ssl.py", line 814, in __init__
+    self.do_handshake()
+  File "/usr/local/lib/python3.6/ssl.py", line 1068, in do_handshake
+    self._sslobj.do_handshake()
+  File "/usr/local/lib/python3.6/ssl.py", line 689, in do_handshake
+    self._sslobj.do_handshake()
+KeyboardInterrupt
+/usr/bin/python3.6: can't open file '/home/bariza/LineBot/wayangDev/wayang.py': [Errno 2] No such file or directory
+python3.6: can't open file '/home/bariza/LineBot/wayangDev/wayang.py': [Errno 2] No such file or directory
+python3.6: can't open file '/home/bariza/LineBot/wayangDev/wayang.py': [Errno 2] No such file or directory

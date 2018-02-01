@@ -1,0 +1,85 @@
+# -*- coding: utf-8 -*-
+from linepy import *
+import json, time, random, tempfile, os, sys
+from gtts import gTTS
+from googletrans import Translator
+from random import randint
+
+if (sys.version_info > (3, 0)):
+    print "The script requires Python 2 :( Sorry!"
+    sys.exit()
+
+from os import system, mkdir, getcwd, name
+from os.path import exists, join
+from textwrap import wrap
+
+from PyLyrics import *
+
+reload(sys)  
+sys.setdefaultencoding('utf8')
+
+#===========================================================================================================================================#
+
+client = LineClient(authToken="EoEsUZmtP3F0iONKCbe0.JUROxzdkKD3c/MrJQ951aa.HEvGX5zeyF1AHTa6FyWijN4aAa5hS36LuPVrir2tb18=")
+client.log("Auth Token : " + str(client.authToken))
+
+channel = LineChannel(client)
+client.log("Channel Access Token : " + str(channel.channelAccessToken))
+
+poll = LinePoll(client)
+
+#===========================================================================================================================================#
+
+
+ki = LineClient(authToken="Eo3usB8sDLAZq6Cv2Qq7.mMD8f775uswF2ssZgJVO5W.Od060NaT5WI/FQz61mwAVJeH3RbcH/wSfiIBLy/x4HI=")
+ki.log("Auth Token : " + str(ki.authToken))
+
+kichannel = LineChannel(ki)
+ki.log("Channel Access Token : " + str(kichannel.channelAccessToken))
+
+kipoll = LinePoll(ki)
+
+#===========================================================================================================================================#
+
+kc = LineClient(authToken="EoKD9XkERA0jLwAjsht1.tBjPCY+fboP36y18qiobCq.GcMiArb7omZM7RwuPrNrg0MKcJD9fEXa4ttjBQsDRik=")
+kc.log("Auth Token : " + str(kc.authToken))
+
+kcchannel = LineChannel(kc)
+kc.log("Channel Access Token : " + str(kcchannel.channelAccessToken))
+
+kcpoll = LinePoll(kc)
+
+#===========================================================================================================================================#
+
+kk = LineClient(authToken="EoudjmMkTeWh6K6NVUIe.AkOpRusKp1cn5G+jz324xG.TBG2rGrrxoFCDm16TfpjcUzkHFvngi+/LKQCy0/y7nI=")
+kk.log("Auth Token : " + str(kk.authToken))
+
+kkchannel = LineChannel(kk)
+kk.log("Channel Access Token : " + str(kkchannel.channelAccessToken))
+
+kkpoll = LinePoll(kk)
+
+#===========================================================================================================================================#
+
+ks = LineClient(authToken="EoRB8WnNT7QKZHUW0ZJc.75kstEi+SaAxRZV8LISJRa.uX9c5pTw/7crJ5nv8yJh1cHak0rLqxiB6yQ1VQE5JA8=")
+ks.log("Auth Token : " + str(ks.authToken))
+
+kschannel = LineChannel(ks)
+ks.log("Channel Access Token : " + str(kschannel.channelAccessToken))
+
+kspoll = LinePoll(ks)
+
+#===========================================================================================================================================#
+
+cl = client
+
+KAC=[cl,ki,kc,kk,ks]
+
+mid = cl.getProfile().mid #fahri
+Amid = ki.getProfile().mid #felly
+Bmid = kc.getProfile().mid #anuan
+Cmid = kk.getProfile().mid #andi
+Dmid = ks.getProfile().mid #agus
+
+
+Bots=[mid,Amid,Bmid,Cmid,Dmid]
