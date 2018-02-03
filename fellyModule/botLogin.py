@@ -22,8 +22,8 @@ print(sys.getdefaultencoding())
 
 #===========================================================================================================================================#
 
-# client = LINE()
-client = LINE(idOrAuthToken="EoJPgSeHvsijHevWfNg0.JUROxzdkKD3c/MrJQ951aa.XP0n+ARFU3JwM4KQhwAKO+Um5B5ynYkkfM7FWDIvTwM=")
+# client = LINE(idOrAuthToken="YOUR_TOKEN_HERE")
+client = LINE()
 client.log("Auth Token : " + str(client.authToken))
 
 channel = Channel(client,client.server.CHANNEL_ID['LINE_TIMELINE'])
@@ -34,7 +34,7 @@ poll = OEPoll(client)
 #===========================================================================================================================================#
 
 
-ki = LINE(idOrAuthToken="EoMtt6VIOE1d6jeoSBh7.mMD8f775uswF2ssZgJVO5W.dz4oOVIUEkF/LUZ57i7LHr7HFhfUUf4FjEARlu5RyKM=")
+ki = LINE()
 ki.log("Auth Token : " + str(ki.authToken))
 
 kichannel = Channel(ki,ki.server.CHANNEL_ID['LINE_TIMELINE'])
@@ -44,7 +44,7 @@ kipoll = OEPoll(ki)
 
 #===========================================================================================================================================#
 
-kc = LINE(idOrAuthToken="Eo701j074Rhsk3TNyud1.tBjPCY+fboP36y18qiobCq.ScwpDrj0jTlDEok/yyh0dVsx12OpuB0iylQC36pDJUA=")
+kc = LINE()
 kc.log("Auth Token : " + str(kc.authToken))
 
 kcchannel = Channel(kc,kc.server.CHANNEL_ID['LINE_TIMELINE'])
@@ -54,7 +54,7 @@ kcpoll = OEPoll(kc)
 
 #===========================================================================================================================================#
 
-kk = LINE(idOrAuthToken="Eo6ZRHUWmb5D7JxEj37e.AkOpRusKp1cn5G+jz324xG.YYHowNjUgs2nhZuN22VqJgI22jj07Ir1HOsdenYLp3E=")
+kk = LINE()
 kk.log("Auth Token : " + str(kk.authToken))
 
 kkchannel = Channel(kk,kk.server.CHANNEL_ID['LINE_TIMELINE'])
@@ -64,7 +64,7 @@ kkpoll = OEPoll(kk)
 
 #===========================================================================================================================================#
 
-ks = LINE(idOrAuthToken="Eo2oeDNcTl57BahHw9rc.75kstEi+SaAxRZV8LISJRa.iIStGfr9ak5XloQOQRJiADCoFjRUHidrPNZhCGcr/YU=")
+ks = LINE()
 ks.log("Auth Token : " + str(ks.authToken))
 
 kschannel = Channel(ks,ks.server.CHANNEL_ID['LINE_TIMELINE'])
