@@ -549,6 +549,34 @@ class Talk(object):
             self.talk.sendMessage(0, msg)
         except Exception as error:
            print(error, 'def Mention')
+
+    @loggedIn
+    def mentionWithText(self, to, nama, isitext):
+        aa = ""
+        bb = ""
+        strt = int(0)
+        akh = int(0)
+        nm = nama
+        myid = self.talk.getProfile().mid
+        # if myid in nm:    
+        #   nm.remove(myid)
+        for mm in nm:
+          akh = akh + 6
+          aa += """{"S":"""+json.dumps(str(strt))+""","E":"""+json.dumps(str(akh))+""","M":"""+json.dumps(mm)+"},"""
+          strt = strt + 7
+          akh = akh + 1
+          bb += "@nrik "+" "+isitext
+        aa = (aa[:int(len(aa)-1)])
+        text = bb
+        try:
+            msg = Message()
+            msg.to = to
+            msg.text = text
+            msg.contentMetadata = {'MENTION':'{"MENTIONEES":['+aa+']}'}
+            msg.contentType = 0
+            self.talk.sendMessage(0, msg)
+        except Exception as error:
+           print(error, 'def Mention With Text')
            
     @loggedIn
     def sendText(self, Tomid, text):

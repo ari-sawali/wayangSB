@@ -76,7 +76,7 @@ def fellyCfgUpdate():
     f = open( 'fellyModule/botCfg.py', 'w' )
     f.write( 
             '# -*- coding: utf-8 -*-' + '\n' +
-            'mode = ' + repr(mode) + '\n' +
+            'botmode = ' + repr(botmode) + '\n' +
             'startTime = ' + repr(startTime) + '\n' +
             'cctv = ' + repr(cctv) + '\n' +
             'wait = ' + repr(wait) + '\n' +
@@ -94,8 +94,10 @@ def fellyCfgUpdate():
             'restartVar = ' + repr(restartVar) + '\n' +
             'protectedGroup = ' + repr(protectedGroup) + '\n' +
             'autoFind = ' + repr(autoFind) + '\n' +
+            'autoHStore = ' + repr(autoHStore) + '\n' +
             'autoPowerUp = ' + repr(autoPowerUp) + '\n' +
-            'autoJoinBattle = ' + repr(autoJoinBattle) + '\n'
+            'autoJoinBattle = ' + repr(autoJoinBattle) + '\n' +
+            'customVar = ' + repr(customVar) + '\n'
         )
     f.close()
 
@@ -521,4 +523,84 @@ def cekAutoFind(usermid):
 		resmsg=str(e)
 	return resmsg
 			 
+#=======================================================================================#
+
+#==============Auto Gacha hero==========================================================#
+
+def setAutoHStore(usermid,data):
+    resmsg=""
+    try:
+        print("Set HStore Parameter\n")
+        autoHStore[str(usermid)]={}
+        autoHStore[str(usermid)]["herotype"]=data[2]
+        autoHStore[str(usermid)]["heroname"]=data[3]
+        autoHStore[str(usermid)]["server"]=str(boten[int(data[4])-1])
+        autoHStore[str(usermid)]["price"]=str(data[5])
+        print(str(len(data))+"\n")
+        if len(data) > 6:
+            print("Set Slot if data > 6")
+            autoHStore[str(usermid)]["slot"]=int(data[6])
+        else:
+            print("Set Slot if only 6 data provided")
+            autoHStore[str(usermid)]["slot"]=0
+        autoHStore[str(usermid)]["start"]=False
+        autoHStore[str(usermid)]["cooldown"]=False
+        print("HStore Parameter has been set")
+        fellyCfgUpdate()
+        resmsg="Done ON"
+    except Exception as e:
+        print("trying on "+str(e))
+        resmsg=str(e)
+    return resmsg
+
+def unsetAutoHStore(usermid):
+    resmsg=''
+    try:
+        autoHStore.pop(usermid,None)
+        fellyCfgUpdate()
+        resmsg="Done OFF"
+    except Exception as e:
+        resmsg=str(e)
+    return resmsg
+    
+def cekAutoHStore(usermid):
+    resmsg=''
+    try:
+        if autoHStore == {}:
+            resmsg="Auto HStore OFF"
+        else:
+            resmsg="Auto HStore\n\n"
+            resmsg+="Hero Type : "+autoHStore[usermid]["herotype"]+"\n"
+            resmsg+="Hero Name : "+autoHStore[usermid]["heroname"]+"\n"
+            resmsg+="Hero Price : "+autoHStore[usermid]["price"]+"\n"
+            if autoHStore[usermid]["start"] == True:
+                resmsg+="Status : Running"
+            else:
+                resmsg+="Status : Paused"
+    except Exception as e:
+        resmsg=str(e)
+    return resmsg
+
+def startStopAutoHStore(usermid,data):
+    result=''
+    try:
+        if data.lower()=="start":
+            if autoHStore[str(usermid)]["start"]==True:
+                result={'result': False, 'resmsg': 'Already Start'}
+            else:
+                autoHStore[str(usermid)]["start"]=True
+                fellyCfgUpdate()
+                result={'result': True, 'resmsg': 'Sukses Start'}
+        elif data.lower()=="stop":
+            if autoHStore[str(usermid)]["start"]==True:
+                autoHStore[str(usermid)]["start"]=False
+                fellyCfgUpdate()
+                result={'result': True, 'resmsg': 'Sukses Stop'}
+            else:
+                result={'result': False, 'resmsg': 'Already Stop'}
+    except Exception as e:
+        resmsg=str(e)
+        result={'result': False, 'resmsg': resmsg}
+    return result
+
 #=======================================================================================#
