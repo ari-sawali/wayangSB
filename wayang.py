@@ -7,8 +7,8 @@ import logging
 from threading import Thread
 
 def restart_program():
-    venvprog = "/usr/bin/python3.6 /home/fahri/LineBot/wayangDev/wayang.py"
-    os.execl(venvprog, * sys.argv)
+    python2 = sys.executable
+    os.execl(python2, python2, * sys.argv)
 
 def shutdown():
     sys.exit()
