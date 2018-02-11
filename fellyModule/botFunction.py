@@ -102,59 +102,59 @@ def fellyCfgUpdate():
     f.close()
 
 def tagall(kx,receiver):
+    exec_start=time.time()
     try:
         group = kx.getGroup(receiver)
         nama = [contact.mid for contact in group.members]
         nm1, nm2, nm3, nm4, nm5, jml = [], [], [], [], [], len(nama)
         if jml <= 100:
             kx.mention(receiver, nama)
-        if jml > 100 and jml < 200:
+        if jml > 100 and jml <= 200:
             for i in range(0, 100):
                 nm1 += [nama[i]]
             kx.mention(receiver, nm1)
-            for j in range(101, len(nama)):
+            for j in range(100, len(nama)):
                 nm2 += [nama[j]]
             kx.mention(receiver, nm2)
-        if jml > 200 and jml < 300:
+        if jml > 200 and jml <= 300:
             for i in range(0, 100):
                 nm1 += [nama[i]]
             kx.mention(receiver, nm1)
-            for j in range(101, 200):
+            for j in range(100, 200):
                 nm2 += [nama[j]]
             kx.mention(receiver, nm2)
-            for k in range(201, len(nama)):
+            for k in range(200, len(nama)):
                 nm3 += [nama[k]]
             kx.mention(receiver, nm3)
-        if jml > 300 and jml < 400:
+        if jml > 300 and jml <= 400:
             for i in range(0, 100):
                 nm1 += [nama[i]]
             kx.mention(receiver, nm1)
-            for j in range(101, 200):
+            for j in range(100, 200):
                 nm2 += [nama[j]]
             kx.mention(receiver, nm2)
-            for k in range(201, len(nama)):
+            for k in range(200, 300):
                 nm3 += [nama[k]]
             kx.mention(receiver, nm3)
-            for l in range(301, len(nama)):
+            for l in range(300, len(nama)):
                 nm4 += [nama[l]]
             kx.mention(receiver, nm4)
         if jml > 400 and jml < 501:
             for i in range(0, 100):
                 nm1 += [nama[i]]
             kx.mention(receiver, nm1)
-            for j in range(101, 200):
+            for j in range(100, 200):
                 nm2 += [nama[j]]
             kx.mention(receiver, nm2)
-            for k in range(201, len(nama)):
+            for k in range(200, 300):
                 nm3 += [nama[k]]
             kx.mention(receiver, nm3)
-            for l in range(301, len(nama)):
+            for l in range(300, 400):
                 nm4 += [nama[l]]
             kx.mention(receiver, nm4)
-            for m in range(401, len(nama)):
+            for m in range(400, len(nama)):
                 nm5 += [nama[m]]
-            kx.mention(receiver, nm5)             
-        kx.sendMessage(receiver, "Members :"+str(jml))
+            kx.mention(receiver, nm5)
         if wait["autoBattle"] == True:
             if wait["battleMode"] == "battle":
                 kx.sendMessage(wait["groupId"],"/battle")
@@ -166,6 +166,9 @@ def tagall(kx,receiver):
                 pass
         else:
             pass
+        exec_finish=time.time()
+        elapsed_time=exec_finish-exec_start
+        kx.sendMessage(receiver, "%sdetik" % (elapsed_time))
     except Exception as e:
         print(e)
 
@@ -510,19 +513,19 @@ def unsetAutoFind(usermid):
     return resmsg
     
 def cekAutoFind(usermid):
-	resmsg=''
-	try:
-		if autoFind == {}:
-			resmsg="Auto Find OFF"
-		else:
-			resmsg="Auto Find\n\n"
-			resmsg+="Hero Type : "+autoFind[usermid]["herotype"]+"\n"
-			resmsg+="Hero Name : "+autoFind[usermid]["heroname"]+"\n"
-			resmsg+="Slot Numb : "+str(autoFind[usermid]["slot"])+"\n"
-	except Exception as e:
-		resmsg=str(e)
-	return resmsg
-			 
+    resmsg=''
+    try:
+        if autoFind == {}:
+            resmsg="Auto Find OFF"
+        else:
+            resmsg="Auto Find\n\n"
+            resmsg+="Hero Type : "+autoFind[usermid]["herotype"]+"\n"
+            resmsg+="Hero Name : "+autoFind[usermid]["heroname"]+"\n"
+            resmsg+="Slot Numb : "+str(autoFind[usermid]["slot"])+"\n"
+    except Exception as e:
+        resmsg=str(e)
+    return resmsg
+             
 #=======================================================================================#
 
 #==============Auto Gacha hero==========================================================#

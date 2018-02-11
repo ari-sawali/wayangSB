@@ -49,7 +49,7 @@ def cekHStore():
                 pass
             # print("cek autoHStore Still Running\n")
         except Exception as e:
-            print("[CEK HSTORE ERROR] : "+str(e)+"\n\n")
+            print("[CEK HSTORE ERROR]["+time.strftime("%Y-%m-%d %H:%M:%S")+"] : "+str(e)+"\n\n")
 # logging.basicConfig(filename='fellyLog/op.log',level=logging.DEBUG)
 
 def bot(op):
@@ -1174,7 +1174,7 @@ def bot(op):
                                                         arr_temp=temp_arr[1].split(" ")
                                                         jml=int(arr_temp[2])
                                                         print("[BIG AJ]["+time.strftime("%Y-%m-%d %H:%M:%S")+"] : Total Participants "+str(arr_temp[2])+"\n")
-                                                        if jml > 20:
+                                                        if jml >= 39:
                                                             target=wait["bigAj"]["boten"]
                                                             txt='/join '+wait["bigAj"]["roomNumber"]
                                                             customVar["roomNumber"]=wait["bigAj"]["roomNumber"]
@@ -1204,16 +1204,6 @@ def bot(op):
                                         else:
                                             pass
                                 elif receiver == bigGroupId:
-                                    if msg.contentType == 0:
-                                        if "MENTION" in msg.contentMetadata:
-                                            key = eval(msg.contentMetadata["MENTION"])
-                                            jml = len(key)
-                                            if jml >= 100:
-                                                wait["bigAj"]["isJoin"]=False
-                                            else:
-                                                pass
-                                        else:
-                                            pass
                                     if msg.contentType == 4:
                                         # print(json.dumps(msg.contentMetadata))
                                         print("[BIG AJ]["+time.strftime("%Y-%m-%d %H:%M:%S")+"]: Initialize\n")
@@ -1241,7 +1231,7 @@ def bot(op):
                                                         print("[BIG AJ]["+time.strftime("%Y-%m-%d %H:%M:%S")+"]: Get Room => "+arr_temp[1]+"\n")
                                                         # print(txt)
                                                         # print("\n\n")
-                                                        time.sleep(10)
+                                                        # time.sleep(10)
                                                         wait["bigAj"]["isJoin"]=False
                                                         wait["bigAj"]["checkCount"]=1
                                                         wait["bigAj"]["boten"]=str(sender)
@@ -1251,15 +1241,25 @@ def bot(op):
                                                         # time.sleep(10)
                                                         # for n in wait["bigAj"]:
                                                         #     KAC[n].sendMessage(sender,(txt))
-                                                        cl.sendMessage(sender,(txt))
-                                                        print("[BIG AJ]["+time.strftime("%Y-%m-%d %H:%M:%S")+"]: 1st checking\n")
-                                                        print("[BIG AJ]["+time.strftime("%Y-%m-%d %H:%M:%S")+"]: Sleep\n")
-                                                        time.sleep(randint(5,10))
-                                                        print("[BIG AJ]["+time.strftime("%Y-%m-%d %H:%M:%S")+"]: Sleep Finish\n")
+                                                        # cl.sendMessage(sender,(txt))
+                                                        # print("[BIG AJ]["+time.strftime("%Y-%m-%d %H:%M:%S")+"]: Checking\n")
+                                                        # print("[BIG AJ]["+time.strftime("%Y-%m-%d %H:%M:%S")+"]: Sleep\n")
+                                                        # time.sleep(randint(15))
+                                                        # print("[BIG AJ]["+time.strftime("%Y-%m-%d %H:%M:%S")+"]: Sleep Finish\n")
                                                 else:
                                                     pass
                                             else:
                                                 pass
+                                    elif msg.contentType == 0:
+                                        if "Pertempuran akan dimulai dalam 50 detik" in text:
+                                            if "isJoin" in wait["bigAj"]:
+                                                txt="/cek "+wait["bigAj"]["roomNumber"]
+                                                cl.sendMessage(sender,(txt))
+                                                print("[BIG AJ]["+time.strftime("%Y-%m-%d %H:%M:%S")+"]: Checking\n")
+                                            else:
+                                                pass
+                                        else:
+                                            pass
                                     else:
                                         pass
                                 else:
@@ -1293,6 +1293,31 @@ def bot(op):
                         else:
                             if msg.toType == 4:
                                 print(msg)
+                            elif receiver == 'c39de70718b11214f8234ba8db7c4c31b':
+                                if msg.contentType == 0:
+                                    print(msg.contentMetadata)
+                                    if "MENTION" in msg.contentMetadata:
+                                        print(msg)
+                                        key = eval(msg.contentMetadata["MENTION"])
+                                        jml = len(key["MENTIONEES"])
+                                        print(jml)
+                                    else:
+                                        pass
+                            elif wait["bigAj"] != {}:
+                                if receiver == bigGroupId:
+                                    if msg.contentType == 0:
+                                        if "MENTION" in msg.contentMetadata:
+                                            print(msg)
+                                            key = eval(msg.contentMetadata["MENTION"])
+                                            jml = len(key["MENTIONEES"])
+                                            print(jml)
+                                            if jml >= 90:
+                                                wait["bigAj"]["isJoin"]=False
+                                                # fellyCfgUpdate()
+                                            else:
+                                                pass
+                                        else:
+                                            pass
                             elif wait["botmode"] == "public":
                                 if receiver in grouplist:
                                     if msg.contentType == 0:
@@ -1484,42 +1509,7 @@ def bot(op):
                         else:
                             pass
                     else:
-                        pass
-
-                if "isJoin" in wait["bigAj"]:
-                    nowtime=time.time()
-                    if nowtime-wait["bigAj"]["waitReply"]>=10:
-                        if wait["bigAj"]["isJoin"]==False:
-                            if wait["bigAj"]["checkCount"]==1:
-                                wait["bigAj"]["checkCount"]=2
-                                print("[BIG AJ]["+time.strftime("%Y-%m-%d %H:%M:%S")+"] : 2nd Checking\n")
-                                cl.sendMessage(wait["bigAj"]["boten"],'/cek '+wait["bigAj"]["roomNumber"])
-                                wait["bigAj"]["waitReply"]=time.time()
-                                # fellyCfgUpdate()
-                                print("[BIG AJ]["+time.strftime("%Y-%m-%d %H:%M:%S")+"] : Sleep\n")
-                                time.sleep(5)
-                                print("[BIG AJ]["+time.strftime("%Y-%m-%d %H:%M:%S")+"] : Sleep Finish\n")
-                            elif wait["bigAj"]["checkCount"]==2:
-                                print("[BIG AJ]["+time.strftime("%Y-%m-%d %H:%M:%S")+"] : Checked 2 Times without Reply\n")
-                                target=wait["bigAj"]["boten"]
-                                txt='/join '+wait["bigAj"]["roomNumber"]
-                                customVar["roomNumber"]=wait["bigAj"]["roomNumber"]
-                                wait["bigAj"].pop("isJoin",None)
-                                wait["bigAj"].pop("checkCount",None)
-                                wait["bigAj"].pop("boten",None)
-                                wait["bigAj"].pop("roomNumber",None)
-                                wait["bigAj"].pop("waitReply",None)
-                                print("[BIG AJ]["+time.strftime("%Y-%m-%d %H:%M:%S")+"] : "+str(wait["bigAj"])+"\n")
-                                # fellyCfgUpdate()
-                                for n in wait["bigAj"]:
-                                    KAC[n].sendMessage(target,(txt))
-                                    print("[BIG AJ]["+time.strftime("%Y-%m-%d %H:%M:%S")+"] : Send Join Command "+txt+"\n")
-                        else:
-                            pass
-                    else:
-                        pass
-                else:
-                    pass       
+                        pass       
     #=========================================================================================================================================#
 
 def runPoll():
@@ -1533,6 +1523,18 @@ def runPoll():
                 
         except Exception as e:
             client.log("[FAHRI_SINGLE_TRACE] ERROR : " + str(e))
+
+def runkiPoll():
+    while True:
+        try:
+            ops=kipoll.singleTrace(count=50)
+            if ops != None:
+              for op in ops: 
+                bot(op)
+                kipoll.setRevision(op.revision)
+                
+        except Exception as e:
+            client.log("[FELLY_SINGLE_TRACE] ERROR : " + str(e))
 
 #Command ini otomatis dijalankan jika restart bot sudah sukses
 #
@@ -1554,5 +1556,7 @@ else:
 
 print("Running cekHStore() Thread\n")
 Thread(target=cekHStore).start()
-print("Running bot(op) Thread\n")
+print("Running bot(fahri) Thread\n")
 Thread(target=runPoll).start()
+# print("Running bot(felly) Thread\n")
+# Thread(target=runkiPoll).start()
