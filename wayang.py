@@ -7,8 +7,8 @@ import logging
 from threading import Thread
 
 def restart_program():
-    python2 = sys.executable
-    os.execl(python2, python2, * sys.argv)
+    venvprog = "/usr/bin/python3.6 /home/fahri/LineBot/wayangDev/wayang.py"
+    os.execl(venvprog, * sys.argv)
 
 def shutdown():
     sys.exit()
@@ -365,6 +365,10 @@ def bot(op):
                                             cl.sendText(msg.to, str (e))
                                     elif text.lower() in ['.tagall','.mentionall','.summon','.kimotih']:   
                                             tagall(client,receiver)
+                                    elif text.lower() in ['.tagall2','.mentionall2','.summon2','.kimotih2']:   
+                                            tagall2(client,receiver)
+                                    elif text.lower() in ['.tagbig']:   
+                                            tagbig(client,receiver)
                                     elif text.lower() in ['.tagadmin','.mentionadmin','.summonadmin','.itteh']:   
                                             tagadmin(client,receiver)
                                     elif text.lower() == ".setbotkuy":
@@ -767,6 +771,103 @@ def bot(op):
                                         except Exception as e:
                                             resmsg=str(e)
                                         cl.sendMessage(receiver,resmsg)
+                                    elif ".botenname:" in text.lower():
+                                        txt=text.replace(".botenname:","")
+                                        gas=txt.split("/")
+                                        mode=gas[0]
+                                        midnum=gas[1]
+                                        name=gas[2]
+                                        resmsg=''
+                                        try:
+                                            if mode=="set":
+                                                if Bots[midnum] not in customVar:
+                                                    customVar[Bots[midnum]]={}
+                                                customVar[Bots[midnum]]["botenName"]=gas[2]
+                                                if "botenNameList" not in customVar:
+                                                    customVar["botenNameList"]=[]
+                                                else:
+                                                    customVar["botenNameList"].append(gas[2])
+                                                resmsg="Battle of Ten Name sudah di set\nName : "+gas[2]
+                                            elif mode=="update":
+                                                newname=gas[3]
+                                                customVar["botenNameList"].remove(name)
+                                                customVar["botenNameList"].append(newname)
+                                                resmsg="Battle of Ten Name sudah di Update\nOld Name : "+gas[2]+"\nNew Name : "+gas[3]
+                                            fellyCfgUpdate()
+                                            cl.sendMessage(receiver,resmsg)
+                                        except Exception as e:
+                                            print("[Battle of Ten Name]["+time.strftime("%Y-%m-%d %H:%M:%S")+"] : "+str(e))
+                                            resmsg="[Battle of Ten Name]["+time.strftime("%Y-%m-%d %H:%M:%S")+"] : "+str(e)
+                                            cl.sendMessage(receiver,resmsg)
+                                    elif ".autotrain:" in text.lower():
+                                        txt=text.replace(".autotrain:","")
+                                        gas=txt.split("/")
+                                        mode=gas[0]
+                                        midnum=gas[1]
+                                        trainmode=0
+                                        if len(gas) > 2:
+                                            trainmode=gas[2]
+                                        resmsg=''
+                                        if Bots[midnum] in customVar:
+                                            try:
+                                                if mode=="on":
+                                                    customVar[Bots[midnum]]["autoTrain"]["active"]=True
+                                                    customVar[Bots[midnum]]["autoTrain"]["trainmode"]=trainmode
+                                                    resmsg="Auto Train On"
+                                                elif mode=="off":
+                                                    customVar[Bots[midnum]]["autoTrain"]["active"]=False
+                                                    resmsg="Auto Train Off"
+                                                fellyCfgUpdate()
+                                                cl.sendMessage(receiver,resmsg)
+                                            except Exception as e:
+                                                print("[Auto Train]["+time.strftime("%Y-%m-%d %H:%M:%S")+"] : "+str(e))
+                                                resmsg="[Auto Train]["+time.strftime("%Y-%m-%d %H:%M:%S")+"] : "+str(e)
+                                                cl.sendMessage(receiver,resmsg)
+                                        else:
+                                            cl.sendMessage(receiver,"Battle of Ten Name belum di set")
+                                    elif ".autocast:" in text.lower():
+                                        txt=text.replace(".autocast:","")
+                                        gas=txt.split("/")
+                                        mode=gas[0]
+                                        midnum=gas[1]
+                                        resmsg=''
+                                        if Bots[midnum] in customVar:
+                                            try:
+                                                if mode=="on":
+                                                    customVar[Bots[midnum]]["autoBattle"]["cast"]=True
+                                                    resmsg="Auto Cast On"
+                                                elif mode=="off":
+                                                    customVar[Bots[midnum]]["autoBattle"]["cast"]=False
+                                                    resmsg="Auto Cast Off"
+                                                fellyCfgUpdate()
+                                                cl.sendMessage(receiver,resmsg)
+                                            except Exception as e:
+                                                print("[Auto Cast]["+time.strftime("%Y-%m-%d %H:%M:%S")+"] : "+str(e))
+                                                resmsg="[Auto Cast]["+time.strftime("%Y-%m-%d %H:%M:%S")+"] : "+str(e)
+                                                cl.sendMessage(receiver,resmsg)
+                                        else:
+                                            cl.sendMessage(receiver,"Battle of Ten Name belum di set")
+                                    elif ".autodef:" in text.lower():
+                                        txt=text.replace(".autodef:","")
+                                        gas=txt.split("/")
+                                        mode=gas[0]
+                                        midnum=gas[1]
+                                        resmsg=''
+                                        if Bots[midnum] in customVar:
+                                            try:
+                                                if mode=="on":
+                                                    customVar[Bots[midnum]]["autoBattle"]["defend"]=True
+                                                    resmsg="Auto Defend On"
+                                                elif mode=="off":
+                                                    customVar[Bots[midnum]]["autoBattle"]["defend"]=False
+                                                    resmsg="Auto Defend Off"
+                                                fellyCfgUpdate()
+                                                cl.sendMessage(receiver,resmsg)
+                                            except Exception as e:
+                                                print("[Auto Defend]["+time.strftime("%Y-%m-%d %H:%M:%S")+"] : "+str(e))
+                                                resmsg="[Auto Defend]["+time.strftime("%Y-%m-%d %H:%M:%S")+"] : "+str(e)
+                                        else:
+                                            cl.sendMessage(receiver,"Battle of Ten Name belum di set")
                                     elif ".autofind:" in text.lower():
                                         resmsg=''
                                         txt=text.replace(".autofind:","")
@@ -839,11 +940,13 @@ def bot(op):
                                     elif ".refresh_battle" in text.lower():
                                         try:
                                             txt="/refresh"
-                                            cl.sendMessage(random.choice(boten),(txt))
-                                            ki.sendMessage(random.choice(boten),(txt))
-                                            kc.sendMessage(random.choice(boten),(txt))
-                                            kk.sendMessage(random.choice(boten),(txt))
-                                            ks.sendMessage(random.choice(boten),(txt))
+                                            for n in boten:
+                                                cl.sendMessage(n,(txt))
+                                                ki.sendMessage(n,(txt))
+                                                kc.sendMessage(n,(txt))
+                                                kk.sendMessage(n,(txt))
+                                                ks.sendMessage(n,(txt))
+                                                sleep(3)
                                         except Exception as e:
                                             cl.sendMessage(receiver,str(e))
                                     elif ".cekmember @" in text.lower():
@@ -893,18 +996,25 @@ def bot(op):
                             if msg.toType == 0:
                                 if msg.contentType == 0:
                                     if "nobot" in text:
-                                        antibotindex=antibot.lower().find("kode kamu")
+                                        antibotindex=text.lower().find("kode kamu")
                                         if antibotindex == -1:
-                                            isitext="ada nobot versi ghaib boss"
-                                            try:
-                                                ki.mentionWithText('cfed1f18026bdf0ccd335839f25285533',mid,str(isitext))
-                                            except:
+                                            if "SATPOLL PP" in text:
+                                                nobot=text.find("/nobot")
+                                                temp=text[nobot:]
+                                                spl=temp.split(" ")
+                                                txt=spl[0]+' '+spl[1]
+                                                cl.sendMessage(sender,(txt))
+                                            else:
+                                                isitext="ada nobot versi ghaib boss"
                                                 try:
-                                                    cl.mentionWithText('cfed1f18026bdf0ccd335839f25285533',mid,str(isitext))
-                                                except Exception as e:
-                                                    print("[nobot]["+time.strftime("%Y-%m-%d %H:%M:%S")+"] : "+str(e))
+                                                    ki.mentionWithText('cfed1f18026bdf0ccd335839f25285533',mid,str(isitext))
+                                                except:
+                                                    try:
+                                                        cl.mentionWithText('cfed1f18026bdf0ccd335839f25285533',mid,str(isitext))
+                                                    except Exception as e:
+                                                        print("[nobot]["+time.strftime("%Y-%m-%d %H:%M:%S")+"] : "+str(e))
                                         else:
-                                            temp=antibot[antibotindex:]
+                                            temp=text[antibotindex:]
                                             spl=temp.split(" ")
                                             txt="/nobot "
                                             if spl[2].lower() == 'bukan':
@@ -912,7 +1022,7 @@ def bot(op):
                                             else:
                                                 txt+=spl[3]
                                             cl.sendMessage(sender,(txt))
-
+                                            
                             if autoFind != {}:
                                 if msg.toType == 0:
                                     if msg.contentType == 0:
@@ -943,10 +1053,10 @@ def bot(op):
                                                 time.sleep(randint(1,10))
                                                 cl.sendMessage(autoFind[receiver]["server"],"/"+autoFind[receiver]["herotype"])
                                         elif autoHStore != {}:
-                                        	if "Kamu membeli Hero "+autoFind[receiver]["heroname"].capitalize() in text:
-                                        		slot=int(autoFind[receiver]["slot"])+1
-                                        		autoFind[receiver]["slot"]=slot
-                                        		fellyCfgUpdate()
+                                            if "Kamu membeli Hero "+autoFind[receiver]["heroname"].capitalize() in text:
+                                                slot=int(autoFind[receiver]["slot"])+1
+                                                autoFind[receiver]["slot"]=slot
+                                                fellyCfgUpdate()
                                         else:
                                             pass
                                 else:
@@ -1022,6 +1132,7 @@ def bot(op):
                                         txt=arr_temp[0]+" "+arr_temp[1]
                                         print(txt)
                                         print("\n\n")
+                                        customVar["roomNumber"]=arr_temp[1]
                                         time.sleep(randint(1,10))
                                         ki.sendMessage(wait["joinedBoT"],(txt))
                                         kc.sendMessage(wait["joinedBoT"],(txt))
@@ -1052,19 +1163,21 @@ def bot(op):
                                             print("[BIG AJ]["+time.strftime("%Y-%m-%d %H:%M:%S")+"] : Try to Check Participants\n")
                                             if wait["bigAj"]["isJoin"]==False:
                                                 print("[BIG AJ]["+time.strftime("%Y-%m-%d %H:%M:%S")+"] : Text = "+text+"\n")
-                                                if "-- Battle Room "+wait["bigAj"]["roomNumber"]+" --" in text:
+                                                if "/judge" in text:
                                                     print("[BIG AJ]["+time.strftime("%Y-%m-%d %H:%M:%S")+"] : Check Total Participants\n")
-                                                    mesindex=text.find("Total")
+                                                    mesindex=text.find("Contoh")
                                                     if mesindex == -1:
                                                         pass
                                                     else:
-                                                        temp_txt=text[mesindex:]
-                                                        arr_temp=temp_txt.split(" ")
+                                                        temp=text[mesindex:]
+                                                        temp_arr=temp.split("\n")
+                                                        arr_temp=temp_arr[1].split(" ")
                                                         jml=int(arr_temp[2])
                                                         print("[BIG AJ]["+time.strftime("%Y-%m-%d %H:%M:%S")+"] : Total Participants "+str(arr_temp[2])+"\n")
                                                         if jml > 20:
                                                             target=wait["bigAj"]["boten"]
                                                             txt='/join '+wait["bigAj"]["roomNumber"]
+                                                            customVar["roomNumber"]=wait["bigAj"]["roomNumber"]
                                                             wait["bigAj"].pop("isJoin",None)
                                                             wait["bigAj"].pop("checkCount",None)
                                                             wait["bigAj"].pop("boten",None)
@@ -1091,6 +1204,16 @@ def bot(op):
                                         else:
                                             pass
                                 elif receiver == bigGroupId:
+                                    if msg.contentType == 0:
+                                        if "MENTION" in msg.contentMetadata:
+                                            key = eval(msg.contentMetadata["MENTION"])
+                                            jml = len(key)
+                                            if jml >= 100:
+                                                wait["bigAj"]["isJoin"]=False
+                                            else:
+                                                pass
+                                        else:
+                                            pass
                                     if msg.contentType == 4:
                                         # print(json.dumps(msg.contentMetadata))
                                         print("[BIG AJ]["+time.strftime("%Y-%m-%d %H:%M:%S")+"]: Initialize\n")
@@ -1103,35 +1226,38 @@ def bot(op):
                                         if mesindex == -1:
                                             pass
                                         else:
-                                            temp=mes[mesindex:]
-                                            arr_temp=temp.split(" ")
-                                            if arr_temp[2]=='Room':
-                                                mesindex=mes.find('/join')
-                                                if mesindex == -1:
-                                                    pass
+                                            if "isJoin" in wait["bigAj"]:
+                                                temp=mes[mesindex:]
+                                                arr_temp=temp.split(" ")
+                                                if arr_temp[2]=='Room':
+                                                    mesindex=mes.find('/join')
+                                                    if mesindex == -1:
+                                                        pass
+                                                    else:
+                                                        temp_txt=mes[mesindex:]
+                                                        arr_temp=temp_txt.split(" ")
+                                                        # txt=arr_temp[0]+" "+arr_temp[1]
+                                                        txt="/cek "+arr_temp[1]
+                                                        print("[BIG AJ]["+time.strftime("%Y-%m-%d %H:%M:%S")+"]: Get Room => "+arr_temp[1]+"\n")
+                                                        # print(txt)
+                                                        # print("\n\n")
+                                                        time.sleep(10)
+                                                        wait["bigAj"]["isJoin"]=False
+                                                        wait["bigAj"]["checkCount"]=1
+                                                        wait["bigAj"]["boten"]=str(sender)
+                                                        wait["bigAj"]["roomNumber"]=arr_temp[1]
+                                                        wait["bigAj"]["waitReply"]=time.time()
+                                                        # fellyCfgUpdate()
+                                                        # time.sleep(10)
+                                                        # for n in wait["bigAj"]:
+                                                        #     KAC[n].sendMessage(sender,(txt))
+                                                        cl.sendMessage(sender,(txt))
+                                                        print("[BIG AJ]["+time.strftime("%Y-%m-%d %H:%M:%S")+"]: 1st checking\n")
+                                                        print("[BIG AJ]["+time.strftime("%Y-%m-%d %H:%M:%S")+"]: Sleep\n")
+                                                        time.sleep(randint(5,10))
+                                                        print("[BIG AJ]["+time.strftime("%Y-%m-%d %H:%M:%S")+"]: Sleep Finish\n")
                                                 else:
-                                                    temp_txt=mes[mesindex:]
-                                                    arr_temp=temp_txt.split(" ")
-                                                    # txt=arr_temp[0]+" "+arr_temp[1]
-                                                    txt="/pemain "+arr_temp[1]
-                                                    print("[BIG AJ]["+time.strftime("%Y-%m-%d %H:%M:%S")+"]: Get Room => "+arr_temp[1]+"\n")
-                                                    # print(txt)
-                                                    # print("\n\n")
-                                                    time.sleep(10)
-                                                    wait["bigAj"]["isJoin"]=False
-                                                    wait["bigAj"]["checkCount"]=1
-                                                    wait["bigAj"]["boten"]=str(sender)
-                                                    wait["bigAj"]["roomNumber"]=arr_temp[1]
-                                                    wait["bigAj"]["waitReply"]=time.time()
-                                                    # fellyCfgUpdate()
-                                                    # time.sleep(10)
-                                                    # for n in wait["bigAj"]:
-                                                    #     KAC[n].sendMessage(sender,(txt))
-                                                    cl.sendMessage(sender,(txt))
-                                                    print("[BIG AJ]["+time.strftime("%Y-%m-%d %H:%M:%S")+"]: 1st checking\n")
-                                                    print("[BIG AJ]["+time.strftime("%Y-%m-%d %H:%M:%S")+"]: Sleep\n")
-                                                    time.sleep(randint(5,10))
-                                                    print("[BIG AJ]["+time.strftime("%Y-%m-%d %H:%M:%S")+"]: Sleep Finish\n")
+                                                    pass
                                             else:
                                                 pass
                                     else:
@@ -1361,13 +1487,13 @@ def bot(op):
                         pass
 
                 if "isJoin" in wait["bigAj"]:
-                    if wait["bigAj"]["isJoin"]==False:
-                        nowtime=time.time()
-                        if nowtime-wait["bigAj"]["waitReply"]>=10:
+                    nowtime=time.time()
+                    if nowtime-wait["bigAj"]["waitReply"]>=10:
+                        if wait["bigAj"]["isJoin"]==False:
                             if wait["bigAj"]["checkCount"]==1:
                                 wait["bigAj"]["checkCount"]=2
                                 print("[BIG AJ]["+time.strftime("%Y-%m-%d %H:%M:%S")+"] : 2nd Checking\n")
-                                cl.sendMessage(wait["bigAj"]["boten"],'/pemain '+wait["bigAj"]["roomNumber"])
+                                cl.sendMessage(wait["bigAj"]["boten"],'/cek '+wait["bigAj"]["roomNumber"])
                                 wait["bigAj"]["waitReply"]=time.time()
                                 # fellyCfgUpdate()
                                 print("[BIG AJ]["+time.strftime("%Y-%m-%d %H:%M:%S")+"] : Sleep\n")
@@ -1377,6 +1503,7 @@ def bot(op):
                                 print("[BIG AJ]["+time.strftime("%Y-%m-%d %H:%M:%S")+"] : Checked 2 Times without Reply\n")
                                 target=wait["bigAj"]["boten"]
                                 txt='/join '+wait["bigAj"]["roomNumber"]
+                                customVar["roomNumber"]=wait["bigAj"]["roomNumber"]
                                 wait["bigAj"].pop("isJoin",None)
                                 wait["bigAj"].pop("checkCount",None)
                                 wait["bigAj"].pop("boten",None)
